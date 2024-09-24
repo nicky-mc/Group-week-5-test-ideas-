@@ -2,18 +2,24 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pg from "pg";
+import { createClient } from "@supabase/supabase-js";
 
 dotenv.config();
-app.use(express.json());
-
-const app = express();
+const app = express(); // Initialize app before using it
 app.use(cors());
 app.use(express.json());
 
-const dbConnectionString = process.env.db_URL;
+// Database connection setup (if needed)
+const dbConnectionString = process.env.db_url; // Assuming you still want to connect to PostgreSQL if needed
 export const db = new pg.Pool({
   connectionString: dbConnectionString,
 });
+
+// Supabase client initialization
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 // Endpoint to get posts for a specific subject
 app.get("/api/posts/:subject", async (req, res) => {
   const { subject } = req.params;
@@ -62,7 +68,8 @@ app.delete("/api/posts/:subject/:id", async (req, res) => {
   }
   res.json(data);
 });
-PORT = process.env.PORT || 5000;
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

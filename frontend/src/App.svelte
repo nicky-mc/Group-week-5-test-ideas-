@@ -2,8 +2,8 @@
     import { onMount } from 'svelte';
     import { createClient } from '@supabase/supabase-js';
 
-    const supabaseUrl = 'postgresql://postgres.abpwxpkwvitaiicrrbhw:4nOd0JkTvmVnPdTE@aws-0-eu-central-1.pooler.supabase.com:6543/postgres';
-    const supabaseKey = '4nOd0JkTvmVnPdTE';
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     let subjects = ['general', 'technology', 'sports'];
@@ -84,7 +84,7 @@
 </main>
 
 <style>
-
+    /* Your styles here */
     main {
         max-width: 800px;
         margin: 40px auto;
